@@ -1,0 +1,13 @@
+path: D:/Project/olo  # 使用绝对路径指向项目根目录
+train: D:/Project/olo/train/images  # 训练集图片绝对路径
+val: D:/Project/olo/valid/images    # 验证集图片绝对路径
+test: D:/Project/olo/test/images    # 测试集图片绝对路径
+
+nc: 1         # 类别数量
+names: ['water']  # 类别名称（积水）
+
+# 注意：运行训练前请确保以下目录包含标注文件和对应图片：
+# - 训练集：train/images目录包含图片，train/labels目录包含标注
+# - 验证集：valid/images目录包含图片，valid/labels目录包含标注
+# - 测试集：test/images目录包含图片，test/labels目录包含标注
+

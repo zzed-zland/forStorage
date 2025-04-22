@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>积水检测结果 - 路面积水检测系统</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h2>路面积水检测结果</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <a href="{{ url_for('index') }}" class="btn btn-outline-primary"><i class="bi bi-arrow-left"></i> 返回首页</a>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header text-center">原始图片</div>
+                                    <div class="card-body text-center">
+                                        <img src="{{ original_image }}" class="img-fluid rounded" alt="原始图片">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header text-center">检测结果</div>
+                                    <div class="card-body text-center">
+                                        <img src="{{ result_image }}" class="img-fluid rounded" alt="检测结果">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">检测详情</h5>
+                            </div>
+                            <div class="card-body">
+                                {% if detection_results %}
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>类别</th>
+                                                    <th>置信度</th>
+                                                    <th>位置坐标</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for result in detection_results %}
+                                                <tr>
+                                                    <td>{{ result.id }}</td>
+                                                    <td>{{ result.class }}</td>
+                                                    <td>{{ "%.2f"|format(result.confidence * 100) }}%</td>
+                                                    <td>[{{ result.bbox[0] }}, {{ result.bbox[1] }}, {{ result.bbox[2] }}, {{ result.bbox[3] }}]</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-info">未检测到积水区域</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <a href="{{ url_for('index') }}" class="btn btn-primary">返回首页</a>
+                            <a href="{{ result_image }}" download class="btn btn-success ms-2">下载结果图片</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5 mb-3">
+        <p class="text-muted">© 2025 路面积水检测系统 | 基于YOLOv8和Flask</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
