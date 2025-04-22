@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>路面积水检测系统</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h2>路面积水检测系统</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <p class="lead">上传图片，检测路面积水情况</p>
+                        </div>
+                        
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                <div class="alert alert-danger">
+                                    {% for message in messages %}
+                                        {{ message }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                        
+                        <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" class="mb-3">
+                            <div class="mb-4 text-center">
+                                <div class="upload-area p-5 border rounded" id="drop-area">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/685/685681.png" alt="上传图标" width="80" class="mb-3">
+                                    <h5>拖放图片到这里或点击选择文件</h5>
+                                    <input type="file" name="file" id="fileInput" class="form-control d-none" accept=".jpg,.jpeg,.png">
+                                    <button type="button" class="btn btn-outline-primary mt-3" id="browseBtn">选择文件</button>
+                                </div>
+                                <div id="file-info" class="mt-3 d-none">
+                                    <span class="badge bg-success">已选择文件: </span>
+                                    <span id="file-name"></span>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">开始检测</button>
+                            </div>
+                        </form>
+                        
+                        <div class="mt-4">
+                            <h5>系统说明:</h5>
+                            <ul>
+                                <li>支持上传JPG、JPEG、PNG格式的图片</li>
+                                <li>使用YOLOv8最新版本进行路面积水检测</li>
+                                <li>检测结果将显示积水区域位置和置信度</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5 mb-3">
+        <p class="text-muted">© 2023 路面积水检测系统 | 基于YOLOv8和Flask</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
